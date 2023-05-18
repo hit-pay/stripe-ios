@@ -8,10 +8,10 @@ protocol CaptureOutputDelegate {
     )
 }
 
-class CreditCard: NSObject {
-    var number: String
-    var expiryMonth: String?
-    var expiryYear: String?
+public class CreditCard: NSObject {
+    public var number: String
+    public var expiryMonth: String?
+    public var expiryYear: String?
     var name: String?
     var image: UIImage?
     var cvv: String?
