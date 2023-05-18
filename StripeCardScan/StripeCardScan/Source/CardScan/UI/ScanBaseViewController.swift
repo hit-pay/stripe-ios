@@ -6,7 +6,7 @@ protocol TestingImageDataSource: AnyObject {
     func nextSquareAndFullImage() -> CGImage?
 }
 
-class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate,
+open class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate,
     AfterPermissions, OcrMainLoopDelegate
 {
 
@@ -86,7 +86,7 @@ class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBu
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(
+    required public init?(
         coder: NSCoder
     ) {
         fatalError("init(coder:) has not been implemented")
@@ -315,23 +315,23 @@ class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBu
         OcrMainLoop()
     }
 
-    override var shouldAutorotate: Bool {
+    public override var shouldAutorotate: Bool {
         return true
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return ScanBaseViewController.isPadAndFormsheet ? .allButUpsideDown : .portrait
     }
 
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+    public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return ScanBaseViewController.isPadAndFormsheet ? UIWindow.interfaceOrientation : .portrait
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
-    override func viewWillTransition(
+    public override func viewWillTransition(
         to size: CGSize,
         with coordinator: UIViewControllerTransitionCoordinator
     ) {
@@ -353,7 +353,7 @@ class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBu
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ScanBaseViewController.isAppearing = true
         /// Set beginning of scan session
@@ -370,7 +370,7 @@ class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBu
         self.navigationController?.setNavigationBarHidden(hideNavigationBar, animated: animated)
     }
 
-    override func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         self.view.layoutIfNeeded()
@@ -384,12 +384,12 @@ class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBu
         self.setupMask()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.ocrMainLoop()?.scanStats.orientation = UIWindow.interfaceOrientationToString
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.videoFeed.willDisappear()
         self.navigationController?.setNavigationBarHidden(
@@ -398,7 +398,7 @@ class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBu
         )
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
+    public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ScanBaseViewController.isAppearing = false
     }
@@ -407,7 +407,7 @@ class ScanBaseViewController: UIViewController, AVCaptureVideoDataOutputSampleBu
         return self.ocrMainLoop()?.scanStats ?? ScanStats()
     }
 
-    func captureOutput(
+    public func captureOutput(
         _ output: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
         from connection: AVCaptureConnection

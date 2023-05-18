@@ -56,7 +56,7 @@ import UIKit
 // this code and customize it to fit your needs -- we're fine with whatever makes
 // the most sense for your app.
 
-protocol SimpleScanDelegate: AnyObject {
+public protocol SimpleScanDelegate: AnyObject {
     func userDidCancelSimple(_ scanViewController: SimpleScanViewController)
     func userDidScanCardSimple(
         _ scanViewController: SimpleScanViewController,
@@ -64,7 +64,7 @@ protocol SimpleScanDelegate: AnyObject {
     )
 }
 
-class SimpleScanViewController: ScanBaseViewController {
+open class SimpleScanViewController: ScanBaseViewController {
 
     // used by ScanBase
     var previewView: PreviewView = PreviewView()
@@ -74,7 +74,7 @@ class SimpleScanViewController: ScanBaseViewController {
 
     // our UI components
     var descriptionText = UILabel()
-    var privacyLinkText = UITextView()
+    public var privacyLinkText = UITextView()
     var privacyLinkTextHeightConstraint: NSLayoutConstraint?
 
     var closeButton: UIButton = {
@@ -85,7 +85,7 @@ class SimpleScanViewController: ScanBaseViewController {
         return button
     }()
 
-    var torchButton: UIButton = {
+    public var torchButton: UIButton = {
         var button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
         button.tintColor = .white
@@ -111,12 +111,12 @@ class SimpleScanViewController: ScanBaseViewController {
     static var torchButtonString = String.Localized.torch
     static var privacyLinkString = String.Localized.scanCardExpectedPrivacyLinkText()
 
-    weak var delegate: SimpleScanDelegate?
+    public weak var delegate: SimpleScanDelegate?
     var scanPerformancePriority: ScanPerformance = .fast
     var maxErrorCorrectionDuration: Double = 4.0
 
     // MARK: Inits
-    override init() {
+    public override init() {
         super.init()
         if UIDevice.current.userInterfaceIdiom == .pad {
             // For the iPad you can use the full screen style but you have to select "requires full screen" in
@@ -128,13 +128,13 @@ class SimpleScanViewController: ScanBaseViewController {
         }
     }
 
-    required init?(
+    required public init?(
         coder: NSCoder
     ) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUiComponents()
@@ -161,7 +161,7 @@ class SimpleScanViewController: ScanBaseViewController {
     //  Targets gets added on every setUpUi call.
     //
     //  Figure out a better way of allow custom buttons programmatically instead of whole UI buttons.
-    override func viewDidDisappear(_ animated: Bool) {
+    public override func viewDidDisappear(_ animated: Bool) {
         closeButton.removeTarget(self, action: #selector(cancelButtonPress), for: .touchUpInside)
         torchButton.removeTarget(self, action: #selector(torchButtonPress), for: .touchUpInside)
     }
